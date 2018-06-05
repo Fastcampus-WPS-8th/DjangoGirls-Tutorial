@@ -4,16 +4,17 @@
 	{% for post in posts %}
 	<div class="card mb-4">
 		<div class="card-body">
-			<!---->
-			<!--post_detail로 이동할 수 있도록-->
-			<!--a태그의 href속성을 동적 지정-->
-			<!---->
-			<!---->
 			<!--post-detail이라는 이름을 가지는 urls.py의 url에-->
 			<!--하나의 인수를 사용(post.id)해서 해당하는 URL을 만들어준다-->
 			<h5 class="card-title"><a href="{% url 'post-detail' post.id %}">[{{ post.id }}] {{ post.title }}</a></h5>
 			<h6 class="card-subtitle text-muted mb-3 text-right">published: {{ post.published_date }}</h6>
 			<p class="card-text">{{ post.text|linebreaksbr|truncatechars:100 }}</p>
+			<div>
+				<form action="{% url 'post-delete' post.id %}" method="POST">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-sm btn-danger">삭제</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	{% endfor %}

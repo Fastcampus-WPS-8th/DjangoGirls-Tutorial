@@ -63,6 +63,11 @@ def post_delete(request, post_id):
     #   post_id에 해당하는 Post인스턴스에서
     #   delete()를 호출해서 DB에서 삭제
     #   이후 post-list(url name)로 redirect
+    if request.method == 'POST':
+        post = Post.objects.get(id=post_id)
+        post.delete()
+        return redirect('post-list')
+
 
     # post_list.html템플릿에서
     #  for문을 순회하는 각 요소마다 form을 하나씩 추가
@@ -75,3 +80,13 @@ def post_delete(request, post_id):
     # 실제 동작: post_list.html의 각 요소에 생성된 버튼을 클릭하면 이 함수가 실행되어야 함
     # breakpoint를 아래 리턴에 걸어놓은 후 request내의 내용을 확인
     return HttpResponse('post_delete view function')
+
+
+def post_edit(request, post_id):
+    # request.method가 'POST'일 때
+    #  post_id에 해당하는 Post의 title과 text를 수정함
+    #  수정 완료 후 post-detail페이지로 이동
+    # method가 'GET'일 때
+    #  post_id에 해당하는 Post의 title과 text가 이미 기록되어있는 form요소를 유저에게 보여줌
+    #  수정 버튼을 누르면 POST요청을 하도록 함
+    pass
