@@ -24,7 +24,10 @@
 		아래 텍스트를 클릭 시 무조건
 		post_list view function에 해당하는 페이지로 이동
 		-->
-		<h1 class="mt-4"><a href="{% url 'post-list' %}">DjangoGirls Blog</a></h1>
+		<h1 class="mt-4 mb-0"><a href="{% url 'post-list' %}">DjangoGirls Blog</a></h1>
+		<div class="text-right mb-2">
+			<a class="btn btn-primary" href="{% url 'post-create' %}">글 쓰기</a>
+		</div>
 
 		{% block content %}
 		{% endblock %}

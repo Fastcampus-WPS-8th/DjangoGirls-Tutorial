@@ -1,0 +1,34 @@
+{% extends 'blog/base.html' %}
+<!--
+1. 템플릿 작성
+	blog/base.html을 기반으로
+	content block에
+	form요소를 작성
+		form요소는 내부에 input, textarea, button을 하나씩 가짐
+
+2. 이 템플릿을 post_create() view function에서 render함수를 사용해 처리된 결과 돌려주기
+
+3. post_create() view function과 blog.urls를 매칭시키기
+	매칭되는 URL은
+	3-1. 정규표현식
+		localhost:8000/write/ <- 이 URL에 해당되도록 한다
+	3-2. url의 이름
+		post-create라는 이름을 붙인다
+	3-3. base.html에서 글 쓰기 링크 만들기
+		blog/base.html의 '글 쓰기' a태그의 href속성에서
+    post_create() view function에 해당하는 위치로의 링크를 url태그를 사용해 생성한다
+-->
+
+{% block content %}
+<form action="">
+	<div class="form-group">
+		<label for="title">제목</label>
+		<input type="text" id="title" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="text">내용</label>
+		<textarea name="" id="text" cols="30" rows="10" class="form-control"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary btn-block">작성</button>
+</form>
+{% endblock %}

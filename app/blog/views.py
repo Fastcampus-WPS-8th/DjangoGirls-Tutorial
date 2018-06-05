@@ -28,3 +28,9 @@ def post_detail(request, post_id):
     # post_detail view function이 올바르게 동작하는 html을 작성해서 결과 보기
     # 1. blog/post_detail.html
     return render(request, 'blog/post_detail.html', context)
+
+
+def post_create(request):
+    # title
+    # text
+    return render(request, 'blog/post_create.html')
