@@ -111,3 +111,34 @@ def post_edit(request, post_id):
         'post': post,
     }
     return render(request, 'blog/post_edit.html', ctx)
+
+
+def post_edit_create(request, post_id=None):
+    def edit_process(post):
+        post.title = title
+        post.text = text
+        post.save()
+        return redirect('post-detail', post.id)
+
+    def create_process(title, text):
+        Post.objects.create(
+            author=request.user,
+            title=title,
+            text=text,
+        )
+        return redirect('post-list')
+
+    # post_id가 존재하면 수정, 아니면 생성
+    context = {}
+    if post_id:
+        context['post'] = Post.objects.get(id=post_id)
+
+    if request.method == 'POST':
+        post = context.get('post')
+        title = request.POST['title']
+        text = request.POST['text']
+        if post:
+            return edit_process(post)
+        else:
+            return create_process(title, text)
+    return render(request, 'blog/post_edit_create.html', context)
