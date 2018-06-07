@@ -10,7 +10,8 @@
 			<h6 class="card-subtitle text-muted mb-3 text-right">published: {{ post.published_date }}</h6>
 			<p class="card-text">{{ post.text|linebreaksbr|truncatechars:100 }}</p>
 			<div>
-				<form action="{% url 'post-delete' post.id %}" method="POST">
+				<a href="{% url 'post-edit' post.id %}" class="btn btn-sm btn-info float-left mr-1">수정</a>
+				<form action="{% url 'post-delete' post.id %}" method="POST" class="float-left">
 					{% csrf_token %}
 					<button type="submit" class="btn btn-sm btn-danger">삭제</button>
 				</form>

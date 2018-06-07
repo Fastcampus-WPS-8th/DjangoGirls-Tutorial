@@ -1,5 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
 from .models import Post
 
 
@@ -68,7 +69,6 @@ def post_delete(request, post_id):
         post.delete()
         return redirect('post-list')
 
-
     # post_list.html템플릿에서
     #  for문을 순회하는 각 요소마다 form을 하나씩 추가
     #  action은 post_delete() view function으로 연결되는 url
@@ -89,4 +89,25 @@ def post_edit(request, post_id):
     # method가 'GET'일 때
     #  post_id에 해당하는 Post의 title과 text가 이미 기록되어있는 form요소를 유저에게 보여줌
     #  수정 버튼을 누르면 POST요청을 하도록 함
-    pass
+    post = Post.objects.get(id=post_id)
+    if request.method == 'POST':
+        # 글을 수정하기
+        # 1. 수정할 내용 (title, text)를 가져온다
+        # 2. 수정할 Post인스턴스를 명시
+        # 3. 해당하는 Post인스턴스의 title, text를 수정해서 DB에 저장
+        # 4. post_detail로 이동
+        title = request.POST['title']
+        text = request.POST['text']
+
+        post.title = title
+        post.text = text
+        post.save()
+
+        # post-detail에 해당하는 URL을 만들어내려면,
+        # (\d+)에 해당하는 부분을 채울 값이 함께 필요
+        return redirect('post-detail', post.id)
+    # POST방식이면 어차피 위에서 return되므로 else문 생략
+    ctx = {
+        'post': post,
+    }
+    return render(request, 'blog/post_edit.html', ctx)
